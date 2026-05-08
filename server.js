@@ -16,14 +16,37 @@ app.get('/', (req, res) => {
   res.send('API is working');
 });
 
-// Form submission endpoint
-app.post('/submit-form', (req, res) => {
-  console.log('📩 Form received:', req.body);
+const formSubmissionSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  message: String,
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
 
-  res.json({
-    message: 'Form received successfully',
-    data: req.body
-  });
+const FormSubmission = mongoose.model('FormSubmission', formSubmissionSchema);
+
+// Form submission endpoint
+app.post('/submit-form', async (req, res) => {
+  try {
+    console.log('📩 Form received:', req.body);
+
+    const savedSubmission = await FormSubmission.create(req.body);
+
+    res.json({
+      message: 'Form saved to MongoDB successfully',
+      data: savedSubmission
+    });
+  } catch (error) {
+    console.error('❌ Error saving form:', error);
+
+    res.status(500).json({
+      message: 'Error saving form to MongoDB',
+      error: error.message
+    });
+  }
 });
 
 const PORT = process.env.PORT || 3000;
