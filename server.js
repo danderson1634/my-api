@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://danderson1_db_user:password@eventspace.rbikpvz.mongodb.net/?appName=eventspace')
+mongoose.connect('mongodb+srv://danderson1_db_user:Mog888tuna^^@eventspace.rbikpvz.mongodb.net/?appName=eventspace')
   .then(() => console.log('Connected to MongoDB'))
   .catch((error) => console.error('MongoDB connection error:', error));
 
